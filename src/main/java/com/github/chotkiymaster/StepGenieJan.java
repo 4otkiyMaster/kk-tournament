@@ -12,10 +12,9 @@ public class StepGenieJan {
         this.field = field;
     }
 
-
     /**
-     * Überprüft alle Feldketten, die von einer Kästchen mit 3 offenen Wänden ausgehen
-     * @return Ketten, die von eine 3er-Kästchen anfangen
+     * Gibt alle Feldketten, die von einem Kästchen mit 3 offenen Wänden ausgehen.
+     * @return Ketten
      */
     public List<List<Wall>> getRoomsOf3() {
         var squaresOf3 = getSquaresOfX(1);// Or move it to for-loop without variable?
@@ -23,9 +22,9 @@ public class StepGenieJan {
     }
 
     /**
-     * Überprüft alle Feldketten, die von einer Kästchen mit 2 offenen Wänden ausgehen
-     * Überprüft nur die Kästchen, die noch nicht überprüft wurden
-     * @return Ketten, die von eine 2er-Kästchen anfangen
+     * Gibt alle Feldketten, die von einem Kästchen mit 2 offenen Wänden ausgehen.
+     * Überprüft nur die Kästchen, die noch nicht überprüft wurden.
+     * @return Ketten
      */
     public List<List<Wall>> getRoomsOf2() {
         var squaresOf2 = getSquaresOfX(2);// Or move it to for-loop without variable?
@@ -33,8 +32,8 @@ public class StepGenieJan {
     }
 
     /**
-     * Ergibt eine Liste von Kästchen mit einer bestimmten Anzahl an geschlossenen Wänden
-     * @param closedWallsOfStartSquare - Anzahl geschlossene Wände
+     * Gibt eine Liste aller Kästchen, mit der gegebenen Anzahl an geschlossenen Wänden zurück.
+     * @param closedWallsOfStartSquare - Anzahl geschlossener Wände
      * @return Liste von Kästchen 
      */
     private List<Square> getSquaresOfX(int closedWallsOfStartSquare) {
@@ -44,6 +43,9 @@ public class StepGenieJan {
                 .toList();
     }
 
+    /**
+    * Hier fehlt der Kommentar.
+    */
     private List<List<Wall>> getRooms(List<Square> squaresOfX, int closedWallsOfStartSquare) {
         List<List<Wall>> currentRooms = new LinkedList<>();
         for (Square currentSquare : squaresOfX) {
@@ -61,16 +63,14 @@ public class StepGenieJan {
     }
 
     /**
-     * Findet eine Kette von der Startkästchen zu eine andere Kästchen, 
-     * von dem aus Sie keie neue Kästchen mehr schließen können.
-     * Wird in eine Rekursion gemacht.
-     * Fügt alle geprüfte Kästchen in Set "squaresInChains"
+     * Findet eine Kette von Squares vom Startkästchen zu einem anderen Kästchen, 
+     * von dem aus Sie keine neue Kästchen mehr schließen können.
      * 
-     * @param startSquare eine Kästchen, von welche Prüfung startet. In Rekursion ist gleiche bei jeder Aufruf
+     * @param startSquare eine Kästchen, von welchem die Prüfung startet. In Rekursion ist gleiche bei jedem Aufruf
      * @param startWall eine Wand, von welche Prüfung startet. In Rekursion ist gleiche bei jeder Aufruf
-     * @param square aktuelle Kästchen, die jetzt geprüft wird
+     * @param square aktuelles Kästchen, das jetzt geprüft wird
      * @param wall aktuelle Wand, die jetzt geprüft wird
-     * @return eine Kette von Squares mit Startpunkt an der gegebener Kästchen
+     * @return die Kette von Squares
      */
     public List<Wall> getChain(Square startSquare, Wall startWall, Square square, Wall wall) {
         squaresInChains.add(square);
