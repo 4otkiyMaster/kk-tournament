@@ -9,7 +9,6 @@ public class GenieJan extends PlayerJan {
 
     /**
      * Wählt eine Wand für ein unsafe step().
-     * Ruft ein init() auf
      * @return Erste Wand aus der kleinsten Liste von Ketten
      */
     @Override

@@ -22,22 +22,6 @@ public class Match {
         this.scores.put(spieler2, 0);
         this.calculationTime.put(spieler1, 0L);
         this.calculationTime.put(spieler2, 0L);
-
-        /*field.getSquare(1, 0).getUpperWall().setClosed(true);
-        field.getSquare(2, 0).getRightWall().setClosed(true);
-        field.getSquare(0, 1).getUpperWall().setClosed(true);
-        field.getSquare(1, 1).getUpperWall().setClosed(true);
-        field.getSquare(2, 1).getUpperWall().setClosed(true);
-        field.getSquare(2, 1).getRightWall().setClosed(true);
-        field.getSquare(3, 1).getUpperWall().setClosed(true);
-        field.getSquare(4, 1).getUpperWall().setClosed(true);
-        field.getSquare(1, 2).getUpperWall().setClosed(true);
-        field.getSquare(2, 2).getRightWall().setClosed(true);
-        field.getSquare(1, 3).getRightWall().setClosed(true);
-        field.getSquare(2, 3).getRightWall().setClosed(true);
-        field.getSquare(3, 3).getUpperWall().setClosed(true);
-        field.getSquare(1, 4).getRightWall().setClosed(true);*/
-
     }
 
     private void keineAhnung(Player spieler){

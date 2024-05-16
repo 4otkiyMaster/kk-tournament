@@ -3,12 +3,10 @@ package com.github.chotkiymaster;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.either;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.oneOf;
-import static org.hamcrest.Matchers.sameInstance;
+import static org.hamcrest.Matchers.anyOf;
 
 class GenieJanTest extends AbstractPlayerTest {
 
@@ -16,7 +14,7 @@ class GenieJanTest extends AbstractPlayerTest {
     Player getPlayer() {
         return new GenieJan();
     }
-    
+
     @Test
     void testMinimumField() {
         var playerUnderTest = getPlayer();
@@ -69,7 +67,7 @@ class GenieJanTest extends AbstractPlayerTest {
             var wall = playerUnderTest.step(field);
             assertThat("each step must return a wall, except match is finished", wall, notNullValue());
             assertThat("returned wall has to be open", wall.isClosed(), equalTo(false));
-            assertThat(wall, either(equalTo(expectedStep)).or(equalTo(expectedAltStep)));
+            assertThat(wall, anyOf(equalTo(expectedStep), equalTo(expectedAltStep)));
             wall.setClosed(true);
 
         //assertThat("all walls must be closed", field, equalTo(expectedField));
@@ -108,7 +106,7 @@ class GenieJanTest extends AbstractPlayerTest {
             var wall = playerUnderTest.step(field);
             assertThat("each step must return a wall, except match is finished", wall, notNullValue());
             assertThat("returned wall has to be open", wall.isClosed(), equalTo(false));
-            assertThat(wall, either(sameInstance(expectedStep)).or(sameInstance(expectedAltStep)));
+            assertThat(wall, anyOf(equalTo(expectedStep), equalTo(expectedAltStep)));
 
     }
 
@@ -140,7 +138,7 @@ class GenieJanTest extends AbstractPlayerTest {
             var wall = playerUnderTest.step(field);
             assertThat("each step must return a wall, except match is finished", wall, notNullValue());
             assertThat("returned wall has to be open", wall.isClosed(), equalTo(false));
-            assertThat(wall, either(sameInstance(expectedStep1Square)).or(sameInstance(expectedAltStep1Square)).or(sameInstance(expectedStep2Square)).or(sameInstance(expectedAltStep2Square)));
+            assertThat(wall, anyOf(equalTo(expectedStep1Square), equalTo(expectedAltStep1Square), equalTo(expectedStep2Square), equalTo(expectedAltStep2Square)));
             wall.setClosed(true);
 
     }
@@ -175,9 +173,8 @@ class GenieJanTest extends AbstractPlayerTest {
             var wall = playerUnderTest.step(field);
             assertThat("each step must return a wall, except match is finished", wall, notNullValue());
             assertThat("returned wall has to be open", wall.isClosed(), equalTo(false));
-            assertThat(wall, not(oneOf(equalTo(wrongWall), equalTo(wrongAltWall))));
-            assertThat(wall, either(equalTo(expected1Wall)).or(equalTo(expected2Wall)).or(equalTo(expected3Wall)).or(equalTo(expected4Wall)));
-            
+            assertThat(wall, not(anyOf(equalTo(wrongWall), equalTo(wrongAltWall))));
+            assertThat(wall, anyOf(equalTo(expected1Wall), equalTo(expected2Wall), equalTo(expected3Wall), equalTo(expected4Wall)));
 
     }
 

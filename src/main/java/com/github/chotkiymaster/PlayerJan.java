@@ -19,11 +19,7 @@ public class PlayerJan implements Player {
         }
         return result;
     }
-/**
- * anderes text
- * @param field text
- * @return wall
- */
+
     protected Wall oneOpen(Field field){
         int getXDimension = field.getXDimension();
         int getYDimension = field.getYDimension();

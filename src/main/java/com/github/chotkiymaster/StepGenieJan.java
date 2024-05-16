@@ -17,7 +17,7 @@ public class StepGenieJan {
      * @return Ketten
      */
     public List<List<Wall>> getRoomsOf3() {
-        var squaresOf3 = getSquaresOfX(1);// Or move it to for-loop without variable?
+        var squaresOf3 = getSquaresOfX(1);
         return getRooms(squaresOf3, 1);
     }
 
@@ -27,7 +27,7 @@ public class StepGenieJan {
      * @return Ketten
      */
     public List<List<Wall>> getRoomsOf2() {
-        var squaresOf2 = getSquaresOfX(2);// Or move it to for-loop without variable?
+        var squaresOf2 = getSquaresOfX(2);
         return getRooms(squaresOf2, 2);
     }
 
@@ -44,8 +44,11 @@ public class StepGenieJan {
     }
 
     /**
-    * Hier fehlt der Kommentar.
-    */
+     * Gibt alle Feldketten, die von einem Kästchen mit einer gegebenen Anzahl geschlossener Wänden ausgehen.
+     * @param squaresOfX Liste von Kästchen mit b
+     * @param closedWallsOfStartSquare Anzahl der geschlossenen Wände
+     * @return
+     */
     private List<List<Wall>> getRooms(List<Square> squaresOfX, int closedWallsOfStartSquare) {
         List<List<Wall>> currentRooms = new LinkedList<>();
         for (Square currentSquare : squaresOfX) {

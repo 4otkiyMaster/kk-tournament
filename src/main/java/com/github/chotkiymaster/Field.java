@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class Field extends JComponent {
+    //TODO:eine Deep-Kopie des Feldes erstellen. Jede Objekt durch Selbstkostruktor kopieren
 
     public static final int SQUARE_SIZE = 23;
     public static final int GAP_BETWEEN_SQUARES = -2;
