@@ -6,6 +6,21 @@ import static com.github.chotkiymaster.Field.SQUARE_SIZE;
 
 public class Wall {
     private boolean closed = false;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Wall() {}
+
+    public Wall(Wall originalWall) {
+        this.closed = originalWall.closed;
+    }
 
     public boolean isClosed() {
         return closed;

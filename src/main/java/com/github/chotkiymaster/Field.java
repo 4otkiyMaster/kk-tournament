@@ -3,6 +3,7 @@ package com.github.chotkiymaster;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 
 public class Field extends JComponent {
     //TODO:eine Deep-Kopie des Feldes erstellen. Jede Objekt durch Selbstkostruktor kopieren
+    //ID zu jede Wand. IDs in Map
 
     public static final int SQUARE_SIZE = 23;
     public static final int GAP_BETWEEN_SQUARES = -2;
@@ -21,11 +23,11 @@ public class Field extends JComponent {
 
     private Square[][] squares;
 
-    public int getXDimension(){
+    public int getXDimension() {
         return this.squares.length;
     }
 
-    public int getYDimension(){
+    public int getYDimension() {
         return this.squares[0].length;
     }
 
@@ -37,7 +39,7 @@ public class Field extends JComponent {
     }
     
     private Map<Wall, List<Square>> walls = new HashMap<>();
-
+    public Map<Wall, Integer> idMap = new HashMap<>();
     public Field(int countX, int countY) {
         this.setSize(
                 countX * (SQUARE_SIZE + GAP_BETWEEN_SQUARES) - GAP_BETWEEN_SQUARES,
@@ -46,8 +48,8 @@ public class Field extends JComponent {
         setBorder(BorderFactory.createEmptyBorder(OUTER_BORDER, OUTER_BORDER, OUTER_BORDER, OUTER_BORDER));
 
         this.squares = new Square[countX][countY];
-        for (int y = 0; y < countY; y++){
-            for (int x = 0; x < countX; x++){
+        for (int y = 0; y < countY; y++) {
+            for (int x = 0; x < countX; x++) {
 
                 this.squares[x][y] = new Square(
                     x>0 ? this.squares[x-1][y].getRightWall() : new Wall(), 
@@ -56,7 +58,13 @@ public class Field extends JComponent {
                     y>0 ? this.squares[x][y-1].getUpperWall() : new Wall()
                 );
                 
-                if(x > 0){
+                idMap.putIfAbsent(this.squares[x][y].getLeftWall(), idMap.size() + 1);
+                idMap.putIfAbsent(this.squares[x][y].getUpperWall(), idMap.size() + 1);
+                idMap.putIfAbsent(this.squares[x][y].getRightWall(), idMap.size() + 1);
+                idMap.putIfAbsent(this.squares[x][y].getBottomWall(), idMap.size() + 1);
+
+
+                if(x > 0) {
                     this.walls.put(getSquare(x, y).getLeftWall(), List.of(this.squares[x][y], this.squares[x-1][y]));
                 }
                 else{
@@ -64,43 +72,79 @@ public class Field extends JComponent {
                 }
                 this.walls.put(getSquare(x, y).getUpperWall(), List.of(this.squares[x][y]));
                 this.walls.put(getSquare(x, y).getRightWall(), List.of(this.squares[x][y]));
-                if(y > 0){
+                if(y > 0) {
                     this.walls.put(getSquare(x, y).getBottomWall(), List.of(this.squares[x][y], this.squares[x][y-1]));
                 }
                 else{
                     this.walls.put(getSquare(x, y).getBottomWall(), List.of(this.squares[x][y]));
                 }
-                
-                /*this.squares[x][y] = new Square(walls[0], walls[1], walls[2], walls[3]);
-                this.squares[x][y].setRightWall(this.squares[x+1][y].getLeftWall());*/
 
-                if(x == 0){
+                if(x == 0) {
                     this.squares[x][y].getLeftWall().setClosed(true);
                 }
-                if(x == countX - 1){
+                if(x == countX - 1) {
                     this.squares[x][y].getRightWall().setClosed(true);
                 }
-                if(y == countY - 1){
+                if(y == countY - 1) {
                     this.squares[x][y].getUpperWall().setClosed(true);
                 }
-                if(y == 0){
+                if(y == 0) {
                     this.squares[x][y].getBottomWall().setClosed(true);
                 }
-                //square.setName("square" + x);
             }
         }
         
     }
 
-    public List<Square> getNeighbours(Wall wall){
+    public Map<Wall, Integer> idMapCopy = new HashMap<>();
+    public Field(Field originalField) {
+        int countX = originalField.getXDimension();
+        int countY = originalField.getYDimension();
+
+        this.setSize(originalField.getSize());
+        setBorder(originalField.getBorder());
+
+        this.squares = new Square[countX][countY];
+        for (int y = 0; y < countY; y++) {
+            for (int x = 0; x < countX; x++) {
+                this.squares[x][y] = new Square(
+                    x>0 ? this.squares[x-1][y].getRightWall() : null, 
+                    y>0 ? this.squares[x][y-1].getUpperWall() : null,
+                    originalField.getSquare(x, y)
+                );
+
+                idMapCopy.putIfAbsent(this.squares[x][y].getLeftWall(), idMapCopy.size() + 1);
+                idMapCopy.putIfAbsent(this.squares[x][y].getUpperWall(), idMapCopy.size() + 1);
+                idMapCopy.putIfAbsent(this.squares[x][y].getRightWall(), idMapCopy.size() + 1);
+                idMapCopy.putIfAbsent(this.squares[x][y].getBottomWall(), idMapCopy.size() + 1);
+
+                if(x > 0) {
+                    this.walls.put(getSquare(x, y).getLeftWall(), List.of(this.squares[x][y], this.squares[x-1][y]));
+                }
+                else{
+                    this.walls.put(getSquare(x, y).getLeftWall(), List.of(this.squares[x][y]));
+                }
+                this.walls.put(getSquare(x, y).getUpperWall(), List.of(this.squares[x][y]));
+                this.walls.put(getSquare(x, y).getRightWall(), List.of(this.squares[x][y]));
+                if(y > 0) {
+                    this.walls.put(getSquare(x, y).getBottomWall(), List.of(this.squares[x][y], this.squares[x][y-1]));
+                }
+                else{
+                    this.walls.put(getSquare(x, y).getBottomWall(), List.of(this.squares[x][y]));
+                }
+            }
+        }
+    }
+
+    public List<Square> getNeighbours(Wall wall) {
         return this.walls.get(wall);
     }
 
 
     public boolean isEnd() {
-        for (int y = 0; y < getYDimension(); y++){
-            for (int x = 0; x < getXDimension(); x++){
-                if(!getSquare(x, y).isClosed()){
+        for (int y = 0; y < getYDimension(); y++) {
+            for (int x = 0; x < getXDimension(); x++) {
+                if(!getSquare(x, y).isClosed()) {
                     return false;
                 }
             }

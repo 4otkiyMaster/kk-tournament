@@ -47,14 +47,31 @@ public class Square {
     }
 
 
-    public Square(Wall leftWall, Wall upperWall, Wall rightWall, Wall bottomWall){
+    public Square(Wall leftWall, Wall upperWall, Wall rightWall, Wall bottomWall) {
         this.leftWall = leftWall;
         this.upperWall = upperWall;
         this.rightWall = rightWall;
         this.bottomWall = bottomWall;
     }
 
-    
+    public Square(Wall leftWall, Wall bottomWall, Square originalSquare) {
+        if(leftWall != null){
+            this.leftWall = leftWall;
+        } else{
+            this.leftWall = new Wall(originalSquare.getLeftWall());
+        }
+        this.upperWall = new Wall(originalSquare.getUpperWall());
+        this.rightWall = new Wall(originalSquare.getRightWall());
+        if(bottomWall != null){
+            this.bottomWall = bottomWall;
+        } else{
+            this.bottomWall = new Wall(originalSquare.getBottomWall());
+        }
+        if (originalSquare.getWinner() != null) {
+            this.winner = originalSquare.getWinner();
+        }
+    }
+
     public List<Wall> getWalls() {
         return List.of(this.getLeftWall(), this.getUpperWall(), this.getRightWall(), this.getBottomWall())
                 .stream()
@@ -66,7 +83,7 @@ public class Square {
         return this.leftWall.isClosed() && this.upperWall.isClosed() && this.rightWall.isClosed() && this.bottomWall.isClosed();
     }
 
-    public long closedWalls(){
+    public long closedWalls() {
         return Arrays.asList(
             this.leftWall.isClosed(),
             this.upperWall.isClosed(), 
