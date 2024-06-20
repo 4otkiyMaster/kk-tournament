@@ -1,25 +1,29 @@
 package com.github.chotkiymaster;
 
 import java.awt.*;
+import java.util.UUID;
 
 import static com.github.chotkiymaster.Field.SQUARE_SIZE;
 
 public class Wall {
     private boolean closed = false;
-    private int id;
+    private UUID id;
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public Wall() {}
+    public Wall() {
+        this.id = UUID.randomUUID();
+    }
 
     public Wall(Wall originalWall) {
         this.closed = originalWall.closed;
+        this.id = originalWall.getId();
     }
 
     public boolean isClosed() {

@@ -73,7 +73,7 @@ public class PlayerJan implements Player {
     protected Wall unsafe(Field field){
         int getXDimension = field.getXDimension();
         int getYDimension = field.getYDimension();
-
+        
         for (int y = 0; y < getYDimension; y++){
             for (int x = 0; x < getXDimension; x++){
                 if(field.getSquare(x,y).closedWalls() < 2){
