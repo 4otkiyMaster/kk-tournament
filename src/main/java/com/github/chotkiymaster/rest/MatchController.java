@@ -5,6 +5,7 @@ import com.github.chotkiymaster.GenieJan;
 import com.github.chotkiymaster.Match;
 import com.github.chotkiymaster.Player;
 import com.github.chotkiymaster.PlayerJan;
+import com.github.chotkiymaster.Square;
 import com.github.chotkiymaster.Wall;
 import com.github.chotkiymaster.domain.FieldData;
 import com.github.chotkiymaster.service.IMatchService;
@@ -15,16 +16,11 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 
 @RestController
 @RequestMapping("/")
+@CrossOrigin(origins = "http://localhost:5173/")
 public class MatchController {
 
     private final IMatchService matchService;
@@ -44,14 +40,29 @@ public class MatchController {
         }
     }
 
+    @GetMapping("/matches/{id}/field/squares")
+    public List<Square> getSquaresByMatchId(@PathVariable UUID id) {
+        var match = matchService.getMatchById(id);
+        if (match != null) {
+            return match.getField().getSquares();
+        } else {
+            throw new MatchNotFoundException("Match with ID " + id + " not found");
+        }
+    }
+
     @GetMapping("/matches")
     public List<FieldData> getFields() {
         List<FieldData> fields = new LinkedList<>();
         var matches = matchService.getMatches();
-        for(Match match: matches){
+        for (Match match : matches) {
             fields.add(match.getField().getFieldData());
         }
         return fields;
+    }
+
+    @GetMapping("/matches/{matchId}/field/walls/{id}/neighbours")
+    public List<Square> getNeighbours(@PathVariable UUID matchId, @PathVariable UUID id) {
+        return matchService.getNeighboursService(id, matchId);
     }
     
 
@@ -62,9 +73,9 @@ public class MatchController {
         return matchService.createMatch(player1, player2, request.getCountX(), request.getCountY());
     }
 
-    //PutMapping (id, setclosed)
+    // PutMapping (id, setclosed)
     @PutMapping("walls/{id}")
-    public Wall putWall(@PathVariable UUID id, @RequestBody WallRequest request){
+    public Wall putWall(@PathVariable UUID id, @RequestBody WallRequest request) {
         return matchService.changeWall(id, request.isClosed());
     }
 
@@ -126,10 +137,3 @@ public class MatchController {
         }
     }
 }
-
-
-
-
-
-
-

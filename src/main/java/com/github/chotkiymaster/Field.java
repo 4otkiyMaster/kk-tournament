@@ -15,10 +15,7 @@ import java.util.stream.Collectors;
 import java.util.UUID;
 
 public class Field extends JComponent {
-    //TODO:eine Deep-Kopie des Feldes erstellen. Jede Objekt durch Selbstkostruktor kopieren
-    //ID zu jede Wand. IDs in Map
-    //Player gibt Wall in FieldCopy, wir nehmen davon eine ID und schließen Wand in Field mit gleichem ID 
-    //UUID statt einfach Integer
+    //TODO:all walls of Field werden angezeigt
 
     public static final int SQUARE_SIZE = 23;
     public static final int GAP_BETWEEN_SQUARES = -2;

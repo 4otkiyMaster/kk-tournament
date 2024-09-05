@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -45,5 +46,11 @@ public class MatchService implements IMatchService {
         Wall wall = walls.get(id);
         wall.setClosed(closed);
         return wall;
+    }
+
+    public List<Square> getNeighboursService(UUID id, UUID matchId){
+        Field field = matches.get(matchId).getField();
+        Wall wall = walls.get(id);
+        return field.getNeighbours(wall);
     }
 }

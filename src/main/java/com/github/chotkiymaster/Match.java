@@ -46,7 +46,7 @@ public class Match {
         System.out.println(id);
     }
 
-    private void keineAhnung(Player spieler) {
+    private void matchStep(Player spieler) {
         boolean rep;
         do{
             Field fieldCopy = new Field(field);
@@ -90,8 +90,8 @@ public class Match {
                     this.calculationTime.get(this.spieler2)
             );
         } else {
-            keineAhnung(this.spieler1);
-            keineAhnung(this.spieler2);
+            matchStep(this.spieler1);
+            matchStep(this.spieler2);
             this.field.repaint();
         }
     }
