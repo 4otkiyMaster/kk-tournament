@@ -4,7 +4,9 @@ import com.github.chotkiymaster.Field;
 import com.github.chotkiymaster.GenieJan;
 import com.github.chotkiymaster.Match;
 import com.github.chotkiymaster.Player;
+import com.github.chotkiymaster.PlayerDirk;
 import com.github.chotkiymaster.PlayerJan;
+import com.github.chotkiymaster.SmarterPlayerDirk;
 import com.github.chotkiymaster.Square;
 import com.github.chotkiymaster.Wall;
 import com.github.chotkiymaster.domain.FieldData;
@@ -70,7 +72,14 @@ public class MatchController {
     public UUID createMatch(@RequestBody MatchRequest request) {
         Player player1 = new GenieJan();
         Player player2 = new PlayerJan();
-        return matchService.createMatch(player1, player2, request.getCountX(), request.getCountY());
+        Player player3 = new SmarterPlayerDirk();
+        Player player4 = new PlayerDirk();
+        List<Player> players = new LinkedList<>();
+        players.add(player1);
+        players.add(player2);
+        players.add(player3);
+        players.add(player4);
+        return matchService.createMatch(players, request.getCountX(), request.getCountY());
     }
 
     // PutMapping (id, setclosed)
@@ -89,6 +98,8 @@ public class MatchController {
     public static class MatchRequest {
         private String player1;
         private String player2;
+        private String player3;
+        private String player4;
         private int countX;
         private int countY;
 
@@ -106,6 +117,22 @@ public class MatchController {
 
         public void setPlayer2(String player2) {
             this.player2 = player2;
+        }
+
+        public String getPlayer3() {
+            return player3;
+        }
+
+        public void setPlayer3(String player3) {
+            this.player3 = player3;
+        }
+
+        public String getPlayer4() {
+            return player4;
+        }
+
+        public void setPlayer4(String player4) {
+            this.player4 = player4;
         }
 
         public int getCountX() {

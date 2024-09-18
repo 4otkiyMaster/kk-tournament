@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -29,9 +30,9 @@ public class MatchService implements IMatchService {
     }
 
     @Override
-    public UUID createMatch(Player player1, Player player2, int countX, int countY) {
+    public UUID createMatch(List<Player> players, int countX, int countY) {
         Field field = new Field(countX, countY);
-        Match match = new Match(player1, player2, field);
+        Match match = new Match(players, field);
         matches.put(match.getId(), match);
         for(Square square: field.getSquares()){
             for(Wall wall: square.getWalls()){

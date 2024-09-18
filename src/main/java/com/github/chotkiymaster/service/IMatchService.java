@@ -13,7 +13,7 @@ import java.util.UUID;
 public interface IMatchService {
     Match getMatchById(UUID id);
     Collection<Match> getMatches();
-    UUID createMatch(Player player1, Player player2, int countX, int countY);
+    UUID createMatch(List<Player> players, int countX, int countY);
     Wall changeWall(UUID id, boolean closed);
     List<Square> getNeighboursService(UUID id, UUID matchId);
 }
